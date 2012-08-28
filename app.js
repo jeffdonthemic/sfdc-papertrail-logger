@@ -90,7 +90,7 @@ getOAuthToken(function(oauth) {
   if(config.DEBUG) console.log('Subscribing to '+ config.PUSH_TOPIC);
   var upstreamSub = client.subscribe(config.PUSH_TOPIC, function(message) {
     // new inserted/updated record receeived -- do something with it
-    if(config.DEBUG) console.log("Received message: " + JSON.stringify(message)); 
+    console.log("Received message: " + JSON.stringify(message)); 
     /**
     * NOW WE HAVE A RECORD FROM SALESFORCE.COM! PROCESS IT ANYWAY YOU'D LIKE!!
     **/
