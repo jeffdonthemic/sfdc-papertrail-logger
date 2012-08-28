@@ -95,27 +95,5 @@ getOAuthToken(function(oauth) {
     * NOW WE HAVE A RECORD FROM SALESFORCE.COM! PROCESS IT ANYWAY YOU'D LIKE!!
     **/
   });
-
-  // log that upstream subscription is active
-  client.callback(function() {
-    if(config.DEBUG) console.log('Upstream subscription is now active');    
-  });
-
-  // log that upstream subscription encounters error
-  client.errback(function(error) {
-    if(config.DEBUG) console.error("ERROR ON Upstream subscription Attempt: " + error.message);
-  });
-
-  // just for debugging I/O, an extension to client -- comment out if too chatty
-  client.addExtension({
-    outgoing: function(message, callback) {   
-      if(config.DEBUG) console.log('OUT >>> '+ JSON.stringify(message));
-      callback(message);            
-    },
-    incoming: function(message, callback) {   
-      if(config.DEBUG) console.log('IN >>>> '+ JSON.stringify(message));
-      callback(message);            
-    }            
-  });  
   
 });
