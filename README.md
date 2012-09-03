@@ -1,10 +1,7 @@
-node-streaming-socketio
+sfdc-papertrail-logger
 =======================
 
-Node demo that streams newly created Account records in Salesforce.com to the browser using socket.io. You can run the demo by opening two browsers:
-
-1. [salesforce CRUD demo with Node](http://node-nforce-demo.herokuapp.com/accounts/new) - Create a new Account record in this app.
-2. [node-streaming-socketio demo](http://node-streaming-socketio.herokuapp.com/) - New Account record are streamed to this app and display in the browser using socket.io. 
+Node application using [faye](hhttp://faye.jcoglan.com/) that catches streamed records from salesforce and logs them via [Papertrail](http://www.papertrailapp.com).
 
 ### Node Module Dependencies
 
@@ -12,9 +9,8 @@ These will be automatically installed when you use the *npm* installation method
 
 1. [express](http://expressjs.com/) - framework
 2. [nforce](https://github.com/kevinohara80/nforce) - REST wrapper for force.com
-3. [jade](http://jade-lang.com/) - the view engine
-4. [faye](hhttp://faye.jcoglan.com/) - a publish-subscribe messaging system based on the Bayeux protocol.
-5. [socket.io](http://jade-lang.com/) - WebSocket protocol for simplify bi-directional communication over HTTP
+3. [jade](http://jade-lang.com/) - the view engine (not really needed)
+4. [faye](http://faye.jcoglan.com/) - a publish-subscribe messaging system based on the Bayeux protocol.
 
 ### Setup Remote Access in Salesforce.com
 
@@ -22,13 +18,13 @@ Setup a new Remote Access to get your OAuth tokens. If you are unfamiliar with s
 
 ### Create a PushTopic in Salesforce.com
 
-Create a new PushTopic from the Developer Console in your org with the follow. This will setup the endpoint for faye to listen to:
+Create a new PushTopic from the Developer Console in your org with the following. This will setup the endpoint for faye to listen to:
 
 PushTopic pt = new PushTopic();  
 pt.apiversion = 24.0;  
-pt.name = 'AllAccounts';
-pt.description = 'All new account records';  
-pt.query = 'SELECT Id, Name FROM Account';  
+pt.name = 'LogEntries';
+pt.description = 'All new logger records';  
+pt.query = 'select id, name, level__c, short_message__c, class__c from log__c';  
 insert pt;  
 System.debug('Created new PushTopic: '+ pt.Id);
 
@@ -37,12 +33,27 @@ You can also set up PushTopics using the [Workbench](https://workbench.developer
 ### Running the Application Locally
 
 From the command line type in:
-<pre>git clone https://github.com/jeffdonthemic/node-streaming-socketio.git</pre>
+<pre>git clone https://github.com/jeffdonthemic/sfdc-papertrail-logger.git</pre>
 
 This will clone this repo locally so you simply have to make your config changes and be up and running. Now replace your OAuth tokens and credentials in the config.js file.
 
-<pre>cd node-streaming-socketio
+<pre>cd sfdc-papertrail-logger
 npm install # install all of the packages from the package.json file
 node app.js # start the server</pre>
 
-Point your browser to: [http://localhost:3001](http://localhost:3001)
+Point your browser to [http://localhost:3001](http://localhost:3001) and watch the magic!
+
+### Deploy to Heroku
+
+<pre>heroku create sfdc-papertrail-logger
+
+heroku config:add CLIENT_ID=YOUR-SALESFORCE-CLIENT-ID
+heroku config:add CLIENT_SECRET=YOUR-SALESFORCE-SECRET
+heroku config:add USERNAME=YOUR-SALESFORCE-USERNAME
+heroku config:add PASSWORD=YOUR-SALESFORCE-PASSWORD-AND-TOKEN
+heroku config:add DEBUG=true
+
+git push heroku master</pre>
+
+Add the environment variables
+

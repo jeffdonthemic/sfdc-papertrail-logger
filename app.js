@@ -89,11 +89,9 @@ getOAuthToken(function(oauth) {
   // subscribe to salesforce.com push topic
   if(config.DEBUG) console.log('Subscribing to '+ config.PUSH_TOPIC);
   var upstreamSub = client.subscribe(config.PUSH_TOPIC, function(message) {
-    // new inserted/updated record receeived -- do something with it
-    console.log("Received message: " + JSON.stringify(message)); 
-    /**
-    * NOW WE HAVE A RECORD FROM SALESFORCE.COM! PROCESS IT ANYWAY YOU'D LIKE!!
-    **/
+    // console.log("Received message: " + JSON.stringify(message)); 
+    console.log('[' + message['sobject']['Level__c'] + '] ' + message['sobject']['Class__c'] 
+      + ' - ' + message['sobject']['Short_Message__c'] + ' (' + message['sobject']['Name'] + ')');
   });
   
 });
