@@ -28,7 +28,7 @@ PushTopic pt = new PushTopic();
 pt.apiversion = 24.0;  
 pt.name = 'LogEntries';
 pt.description = 'All new logger records';  
-pt.query = select id, name, level__c, short_message__c, class__c from log__c;  
+pt.query = 'select id, name, level__c, short_message__c, class__c from log__c';  
 insert pt;  
 System.debug('Created new PushTopic: '+ pt.Id);
 
