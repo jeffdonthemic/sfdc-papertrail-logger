@@ -55,5 +55,9 @@ heroku config:add DEBUG=true
 
 git push heroku master</pre>
 
-Add the environment variables
+Add the Papertrail add-on from the app in Heroku or with:
+
+<pre>heroku addons:add papertrail:choklad</pre>
+
+Open Papertrail from the app on Heroku in the upper right "Add-ons" menu.
 
