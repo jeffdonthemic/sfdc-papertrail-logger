@@ -12,6 +12,10 @@ These will be automatically installed when you use the *npm* installation method
 3. [jade](http://jade-lang.com/) - the view engine (not really needed)
 4. [faye](http://faye.jcoglan.com/) - a publish-subscribe messaging system based on the Bayeux protocol.
 
+### Installing the Logger assets in Salesforce.com
+
+Install the Log__c custom object and Logger.cls class from the saleforce directory into your org.
+
 ### Setup Remote Access in Salesforce.com
 
 Setup a new Remote Access to get your OAuth tokens. If you are unfamiliar with settng this up, see 4:45 of my [Salesforce.com Primer for New Developers](http://www.youtube.com/watch?v=fq2ju2ML9GM). For your callback, simply use: http://localhost:3001/oauth/_callback
